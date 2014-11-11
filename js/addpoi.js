@@ -34,8 +34,6 @@
    var linename = $(".linename").val();
    $.cookie("line_" + linename, lineArr);
    console.log($.cookie("line_" + linename));
-   console.log();
-   return false;
  }
 
  $(".tog").click(function() {
