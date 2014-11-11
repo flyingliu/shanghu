@@ -3,7 +3,7 @@
    lineArr = [],
    subline = [];
  var sorh = true;
- var storage = window.localStorage;
+ var storage = $.cookie();
  window.onload = function() {
    polylineOption = {
      strokeColor: "#FF33FF",
@@ -32,7 +32,10 @@
 
  function joinline() {
    var linename = $(".linename").val();
-   localStorage.setItem("line_" + linename, lineArr);
+   $.cookie("line_" + linename, lineArr);
+   console.log($.cookie("line_" + linename));
+   console.log();
+   return false;
  }
 
  $(".tog").click(function() {
@@ -43,12 +46,8 @@
      $(this).addClass('active');
      sorh = false;
      html = "";
-     for (var i = 0, len = storage.length; i < len; i++) {
-       var key = storage.key(i);
-       var value = storage.getItem(key);
-       if (key.indexOf("line_") > -1) {
-         html += "<li>" + key.substr(5) + "</li>";
-       }
+     for (key in storage) {
+        html += "<li>" + key.substr(5) + "</li>";
      }
      $("#lines").html("").html(html);
    } else {
@@ -64,7 +63,7 @@
     if( !$(this).hasClass("active") ){
         $(this).addClass('active');
        var curkey = "line_" + $(this).text();
-       var curValue = storage.getItem(curkey).split(",");
+       var curValue =  $.cookie(curkey).split(",");
        var thisline = [];
        for(var i=0,len=curValue.length;i<len;i++){
         if(i%2==0){
